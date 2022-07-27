@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block head%}
+<title>Where is Dimagi</title>
+{% endblock %}
+
+{% block body %}
+<div class="flash">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash-{{ category }}">
+                {{ message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+<h1>User Location Form</h1>
+<div class="form">
+    <form action="/" method="POST" id="add-location">
+        <fieldset>
+            <!-- <label for="first-name">FIRST NAME
+                <input type="text" id="first-name" name="firstName" required>
+            </label>
+            <label for="last-name">LAST NAME
+                <input type="text" id="last-name" name="lastName" required>
+            </label> -->
+            <label for="email">EMAIL
+                <input type="email" id="email" name="email" required>
+            </label>
+            <label for="city">LOCATED CITY
+                <input type="text" id="city" name="city" required>
+            </label>
+            <label for="country">LOCATED COUNTRY
+                <input type="text" id="country" name="country" required>
+            </label>
+            <button type="submit" form="add-location">Add Location!</button>
+        </fieldset>
+    </form>
+</div>
+
+<div class="content">  
+    <h1>User Locations</h1>
+    {% if users|length < 1 %}
+    <h4 style="text-align:center"> There are no users. Create one below! </h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Added Date</th>
+        </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.lat }}</td>
+            <td>{{ user.lng }}</td>
+            <td>{{ user.date_created[0]}} {{ user.date_created[1]}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}
